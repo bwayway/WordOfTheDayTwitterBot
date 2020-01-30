@@ -1,7 +1,7 @@
 # Word Of The Day Twitter Bot
 Twitter bot that posts the word of the Day every day. Follow at @WOTDBBW
 
-#Setting up
+# Setting up
 
 Make sure that you installed the Twit and words-of-the-day NPM packages:
 -https://www.npmjs.com/package/words-of-the-day
