@@ -37,8 +37,8 @@ function postTweet(){
 function GetWordType(definition){
     var typeLong = definition.substr(0,definition.indexOf('.'))
     var wordArray = new Array
-    wordArray.push(typeLong.split('  '))
-    var word = wordArray[0][1]
+    wordArray.push(typeLong.split(' '))
+    var word = wordArray[0][2]
     console.log(word)
     return word
 }
