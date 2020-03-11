@@ -18,7 +18,7 @@ function postTweet(){
     wordOfTheDay.wordThink().then(data =>{
 
         var tweet = {
-            status: data.word + ' (' + GetWordType(data.meaning) + '.)' + ':' + '\n' +  TrimDefinition(data.meaning)
+            status: data.word + " " + GetWordType(data.meaning)  + ':' + '\n' +  TrimDefinition(data.meaning)
         }
         console.log(tweet.status)
 
@@ -38,7 +38,11 @@ function GetWordType(definition){
     var typeLong = definition.substr(0,definition.indexOf('.'))
     var wordArray = new Array
     wordArray.push(typeLong.split(' '))
-    var word = wordArray[0][2]
+    var word = (" (" + wordArray[0][2] + ".)")
+    var pronunciation = wordArray[0][1]
+    console.log(word)
+    console.log(pronunciation)
+    word = pronunciation + word
     console.log(word)
     return word
 }
