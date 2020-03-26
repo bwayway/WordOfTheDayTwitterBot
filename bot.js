@@ -9,7 +9,7 @@ const wordOfTheDay = require('words-of-the-day')
 //Variables
 var T = new Twit(config);
 
-//setInterval(postTweet,1000*60*60*24)
+setInterval(postTweet,1000*60*60*24)
 
 postTweet()
 
@@ -17,8 +17,12 @@ postTweet()
 function postTweet(){
     wordOfTheDay.wordThink().then(data =>{
 
+        var wordArray = new Array
+        wordArray.push(data.meaning.split(' '))
+        wordTypeIndex = GetWordTypeIndex(wordArray)
+
         var tweet = {
-            status: data.word + " " + GetWordType(data.meaning)  + ':' + '\n' +  TrimDefinition(data.meaning)
+            status: data.word + " " + wordArray[0][wordTypeIndex-1] + " (" + wordArray[0][wordTypeIndex] + ")" + ':' + '\n' +  TrimDefinition(data.meaning,wordArray,wordTypeIndex)
         }
         console.log(tweet.status)
 
@@ -33,23 +37,23 @@ function postTweet(){
 
 
 
-//Because the word, definition, and type are all in one string, we have to extract the word type from the string
-function GetWordType(definition){
-    var typeLong = definition.substr(0,definition.indexOf('.'))
-    var wordArray = new Array
-    wordArray.push(typeLong.split(' '))
-    var word = (" (" + wordArray[0][2] + ".)")
-    var pronunciation = wordArray[0][1]
-    console.log(word)
-    console.log(pronunciation)
-    word = pronunciation + word
-    console.log(word)
-    return word
-}
+
 
 //Because the word, definition, and type are all in one string, we trim it down to only have the definition.
-function TrimDefinition(definition){
-    var startingIndex = definition.indexOf('.')
-    var trimmedDefinition = definition.slice(startingIndex + 2,(definition.length))
+function TrimDefinition(definition,wordArray,wordTypeIndex){
+    var trimmedDefinition = definition.substr(definition.indexOf(wordArray[0][wordTypeIndex + 1]))
     return trimmedDefinition
+}
+
+
+//Because the word, definition, and type are all in one string, we have to extract the word type from the string by grabbing its index
+function GetWordTypeIndex(wordArray){
+    if(wordArray[0][2].startsWith("ad")||wordArray[0][2].startsWith("v")|| wordArray[0][2].startsWith("n"))
+    {
+        return 2
+    }
+    else
+    {
+        return 3
+    }
 }
