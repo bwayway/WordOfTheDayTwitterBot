@@ -22,7 +22,7 @@ function postTweet(){
         wordTypeIndex = GetWordTypeIndex(wordArray)
 
         var tweet = {
-            status: data.word + " " + wordArray[0][wordTypeIndex-1] + " (" + wordArray[0][wordTypeIndex] + ")" + ':' + '\n' +  TrimDefinition(data.meaning,wordArray,wordTypeIndex)
+            status: data.word + " " + wordArray[0][wordTypeIndex-1] + " (" + wordArray[0][wordTypeIndex].trim() + ")" + ':' + '\n' +  TrimDefinition(data.meaning,wordArray,wordTypeIndex)
         }
         console.log(tweet.status)
 
@@ -41,7 +41,14 @@ function postTweet(){
 
 //Because the word, definition, and type are all in one string, we trim it down to only have the definition.
 function TrimDefinition(definition,wordArray,wordTypeIndex){
+    if(wordArray[0][wordTypeIndex + 1] != ""){
     var trimmedDefinition = definition.substr(definition.indexOf(wordArray[0][wordTypeIndex + 1]))
+    
+    }
+
+    else{
+        var trimmedDefinition = definition.substr(definition.indexOf(wordArray[0][wordTypeIndex + 2]))
+    }
     return trimmedDefinition
 }
 
